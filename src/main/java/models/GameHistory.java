@@ -1,7 +1,7 @@
 package models;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,10 +22,10 @@ public class GameHistory {
     public Long getId() {
         return id;
     }
-   // private boolean winRound;
+   private boolean winRound;
 
-    //@Temporal(TemporalType.DATE)
-    //private Date gameDate;
+    @Temporal(TemporalType.DATE)
+    private Date gameDate;
 
     public GameHistory() {
     }
@@ -37,7 +37,7 @@ public class GameHistory {
     public void setUsers(List<User> users) {
         this.users = users;
     }
-/*
+
     public boolean isWinRound() {
         return winRound;
     }
@@ -52,5 +52,5 @@ public class GameHistory {
 
     public void setGameDate(Date gameDate) {
         this.gameDate = gameDate;
-    }*/
+    }
 }
