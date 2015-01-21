@@ -1,9 +1,6 @@
 package models;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -19,8 +16,8 @@ public class User {
     public String password;
     public byte[] salt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private  GameHistory gameHistory;
+    @OneToMany(fetch = FetchType.LAZY)
+    private  List<GameHistory> gameHistory;
 
     public User() {
     }

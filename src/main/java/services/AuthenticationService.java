@@ -36,21 +36,6 @@ public class AuthenticationService {
         }
         return false;
 
-/*
-        Optional<User> userOptional;
-        try{
-            userOptional = userRepository.findUserByUName(username);
-            if(userOptional.get().getUsername().equals(username)){
-                return compareSaltedPW(userOptional.get(),password);
-            }
-        }
-        catch (NoSuchElementException ex){
-            return false;
-        }
-        return false;
-*/
-
-
     }
 
     public boolean register(String username,String password){

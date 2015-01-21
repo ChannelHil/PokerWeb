@@ -10,8 +10,8 @@ import java.util.List;
 @Entity
 public class GameHistory {
 
-    @OneToMany (fetch = FetchType.LAZY, mappedBy = "gameHistory")
-    private List<User> users;
+    @ManyToOne (fetch = FetchType.LAZY)
+    private User users;
 
     @Enumerated(EnumType.ORDINAL)
     private Result result;
@@ -30,11 +30,18 @@ public class GameHistory {
     public GameHistory() {
     }
 
-    public List<User> getUsers() {
+    public GameHistory(User users, Result result, boolean winRound, Date gameDate) {
+        this.users = users;
+        this.result = result;
+        this.winRound = winRound;
+        this.gameDate = gameDate;
+    }
+
+    public User getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(User users) {
         this.users = users;
     }
 

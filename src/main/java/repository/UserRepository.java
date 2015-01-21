@@ -17,6 +17,8 @@ import java.util.Optional;
 @Singleton
 public class UserRepository extends BaseRepository<User>{
 
+    @Inject
+    User user;
 
     @UnitOfWork
     public Optional<User> findUserByUName(String username){
@@ -24,47 +26,10 @@ public class UserRepository extends BaseRepository<User>{
         return u;
     }
 
-
-    List<User> userList = new ArrayList<User>();
-
-    @Inject
-    User user;
-
-    /*public Optional findUserByUName(@PathParam("username") String username){
-        //userList = user.getUserList();
-     if (!userList.isEmpty()){
-        for(User u:userList){
-            String uname= u.getUsername();
-            if(uname.equals(username)){
-                return Optional.of(u);
-            }
-        }
-     }
-        return Optional.empty();
-    }*/
-
-   /* public User addUser(String username, String password, byte[] salt){
-        User u = new User();
-        u.setUsername(username);
-        u.setPassword(password);
-        u.setSalt(salt);
-        //userList.add(u);
-
-        return u;
+    @UnitOfWork
+    public List<String> getPlayers(int numberPlayers) {
+        //return getEntityManager().createQuery("SELECT u.username FROM User u LIMIT " + numberPlayers).getResultList();
+        return getEntityManager().createQuery("SELECT username FROM User").getResultList();
     }
-*/
-
-    /*public boolean userExist(String username){
-        if (!userList.isEmpty()){
-            for(User u:userList){
-                String uname= u.getUsername();
-                if(uname.equals(username)){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }*/
-
 
 }

@@ -20,12 +20,14 @@ import com.google.inject.Inject;
 import filters.SecureFilter;
 import models.Card;
 import models.Hand;
+import models.User;
 import ninja.FilterWith;
 import ninja.Result;
 import ninja.Results;
 
 import com.google.inject.Singleton;
 import services.IPokerService;
+import services.PlayGameService;
 import services.PokerService;
 
 import java.util.List;
@@ -37,89 +39,92 @@ public class ApplicationController {
     @Inject
     private IPokerService pokerService;
 
+    @Inject
+    private PlayGameService playGameService;
+
+    int numberPlayers = 4;
+
     @FilterWith(SecureFilter.class)
     public Result index() {
         Result result = Results.html();
-        //PokerService pokerService = new PokerService();
-
-        //result.render("name", pokerService.getName());
         setPokerService(pokerService);
-        List<Hand> hands = pokerService.dealHands(4);
-        int counter = 1;
-        int size = hands.size();
-        int winner=0;
-        int winHandStrenght=0;
+
+        List<Hand> hands = pokerService.dealHands(numberPlayers);
+        List<String> users = playGameService.getPlayers(numberPlayers);
+        if (users.size() != 4) {
+            //Not valid play
+        }
+
+        int winner = 0;
+        int winHandStrenght = 0;
         boolean firstRun = true;
-        for(Hand hand:hands){
-            if(firstRun) {
-                winner = counter;
-                firstRun = false;
-            }
 
-            List<Card> c = hand.getCards();
-            result.render("user" + counter, counter);
 
-            result.render("cOne" + counter, c.get(0).getRank() + "_" + c.get(0).getSuit() + ".png");
-            result.render("cTwo" + counter, c.get(1).getRank() + "_" + c.get(1).getSuit()+ ".png");
-            result.render("cThree" + counter, c.get(2).getRank() + "_" + c.get(2).getSuit()+ ".png");
-            result.render("cFour" + counter, c.get(3).getRank() + "_" + c.get(3).getSuit()+ ".png");
-            result.render("cFive" + counter, c.get(4).getRank() + "_" + c.get(4).getSuit()+ ".png");
+            for (int i = 0; i < hands.size(); i++) {
+                if (firstRun) {
+                    winner = i;
+                    firstRun = false;
+                }else{
+                    String n = users.get(i).toString();
+                    result.render("user" + i, n);
+                }
 
-            int strength = pokerService.evaluateHand(hand);
-            switch (strength){
-                case 0: result.render("result" + counter, "Nothing");
-                    break;
-                case 1: result.render("result" + counter, "Pair");
-                    break;
-                case 2: result.render("result" + counter, "2 Pair");
-                    break;
-                case 3: result.render("result" + counter, "3 of a Kind");
-                    break;
-                case 4: result.render("result" + counter, "Straight");
-                    break;
-                case 5: result.render("result" + counter, "Flush");
-                    break;
-                case 6: result.render("result" + counter, "Full House");
-                    break;
-                case 7: result.render("result" + counter, "4 of a Kind");
-                    break;
-                case 8: result.render("result" + counter, "Straight Flush");
-                    break;
+                List<Card> c = hands.get(i).getCards();
+
+                result.render("cOne" + i, c.get(0).getRank() + "_" + c.get(0).getSuit() + ".png");
+                result.render("cTwo" + i, c.get(1).getRank() + "_" + c.get(1).getSuit() + ".png");
+                result.render("cThree" + i, c.get(2).getRank() + "_" + c.get(2).getSuit() + ".png");
+                result.render("cFour" + i, c.get(3).getRank() + "_" + c.get(3).getSuit() + ".png");
+                result.render("cFive" + i, c.get(4).getRank() + "_" + c.get(4).getSuit() + ".png");
+
+                int strength = pokerService.evaluateHand(hands.get(i));
+                switch (strength) {
+                    case 0:
+                        result.render("result" + i, "Nothing");
+                        break;
+                    case 1:
+                        result.render("result" + i, "Pair");
+                        break;
+                    case 2:
+                        result.render("result" + i, "2 Pair");
+                        break;
+                    case 3:
+                        result.render("result" + i, "3 of a Kind");
+                        break;
+                    case 4:
+                        result.render("result" + i, "Straight");
+                        break;
+                    case 5:
+                        result.render("result" + i, "Flush");
+                        break;
+                    case 6:
+                        result.render("result" + i, "Full House");
+                        break;
+                    case 7:
+                        result.render("result" + i, "4 of a Kind");
+                        break;
+                    case 8:
+                        result.render("result" + i, "Straight Flush");
+                        break;
+                }
+                if (strength > winHandStrenght) {
+                    winHandStrenght = strength;
+                    winner = i;
+                }
             }
             //result.render("result" + counter, pokerService.evaluateHand(hand));
 
-            if(strength>winHandStrenght){
-                winHandStrenght=strength;
-                winner=counter;
-            }
-            counter ++;
+
+        if(winner == 0) {
+            result.render("winner", "YOU");
+        }else {
+            result.render("winner", users.get(winner).toString() + "");
         }
-        result.render("winner", winner + "");
-
-        /*
-        Hand hand = pokerService.dealHand();
-
-        List<Card> c = hand.getCards();
-        String cOne =c.get(0).getRank() + "_" + c.get(0).getSuit() + ".png";
-        String cTwo =c.get(1).getRank() + "_" + c.get(1).getSuit()+ ".png";
-        String cThree =c.get(2).getRank() + "_" + c.get(2).getSuit()+ ".png";
-        String cFour =c.get(3).getRank() + "_" + c.get(3).getSuit()+ ".png";
-        String cFive =c.get(4).getRank() + "_" + c.get(4).getSuit()+ ".png";
-
-        result.render("cOne", cOne);
-        result.render("cTwo", cTwo);
-        result.render("cThree", cThree);
-        result.render("cFour", cFour);
-        result.render("cFive", cFive);
-
-        //result.render("result", "tt");
-*/
-
         return result;
 
     }
 
-    public void setPokerService(IPokerService iPokerService){
-        this.pokerService=iPokerService;
+    public void setPokerService(IPokerService iPokerService) {
+        this.pokerService = iPokerService;
     }
 }
