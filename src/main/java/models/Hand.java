@@ -14,8 +14,9 @@ import java.util.List;
 @Entity
 public class Hand extends BaseEntity{
 
-    @ManyToMany
-            //(cascade = CascadeType.ALL , mappedBy = hands)
+
+
+    @ManyToMany(cascade = CascadeType.ALL , mappedBy = "hands")
     List<Card> cardList;
 
     public Hand() {
@@ -29,10 +30,13 @@ public class Hand extends BaseEntity{
         cardList.add(new Card(h3.substring(1),h3.substring(0,1)));
         cardList.add(new Card(h4.substring(1),h4.substring(0,1)));
         cardList.add(new Card(h5.substring(1),h5.substring(0,1)));
-
+        setCardList(cardList);
 
     }
 
+    public void setCardList(List<Card> cardList) {
+        this.cardList = cardList;
+    }
     public List<Card> getCards(){
         return cardList;
     }

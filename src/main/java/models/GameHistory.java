@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 public class GameHistory extends BaseEntity {
 
-    @OneToMany
+    @OneToMany (mappedBy = "gameHistory")
     private List<User> users;
 
     @Enumerated(EnumType.ORDINAL)

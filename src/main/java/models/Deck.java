@@ -10,7 +10,7 @@ import java.util.Collections;
  * Created by Channel on 2015-01-09.
  */
 
-public class Deck extends BaseEntity{
+public class Deck{
 
     ArrayList<Card> cards;
     int nCards;
