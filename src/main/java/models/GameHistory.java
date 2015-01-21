@@ -8,14 +8,20 @@ import java.util.List;
  * Created by Channel on 2015-01-21.
  */
 @Entity
-public class GameHistory extends BaseEntity {
+public class GameHistory {
 
-    @OneToMany (mappedBy = "gameHistory")
+    @OneToMany (fetch = FetchType.LAZY, mappedBy = "gameHistory")
     private List<User> users;
 
     @Enumerated(EnumType.ORDINAL)
     private Result result;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Long id;
 
+    public Long getId() {
+        return id;
+    }
    // private boolean winRound;
 
     //@Temporal(TemporalType.DATE)

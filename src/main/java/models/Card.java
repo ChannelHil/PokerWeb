@@ -7,10 +7,10 @@ import java.util.List;
  * Created by Channel on 2015-01-09.
  */
 @Entity
-public class Card extends BaseEntity{
+public class Card{
 
     @ManyToMany
-    private List<Hand> handList;
+    private List<Hand> hands;
 
     @Enumerated(EnumType.STRING)
     private Suit suit;
@@ -18,7 +18,13 @@ public class Card extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private Rank rank;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Long id;
 
+    public Long getId() {
+        return id;
+    }
     public Card() {
     }
 
