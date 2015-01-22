@@ -13,6 +13,7 @@ public enum Rank {
     SEVEN ("7"),
     EIGHT ("8"),
     NINE ("9"),
+    TEN ("0"),
     JACK ("J"),
     QUEEN ("Q"),
     KING ("K");
@@ -55,6 +56,8 @@ public enum Rank {
             case EIGHT:  convert = "8";
                 break;
             case NINE:  convert = "9";
+                break;
+            case TEN:  convert = "0";
                 break;
             case KING:  convert = "K";
                 break;

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Channel on 2015-01-09.
@@ -12,15 +13,14 @@ import java.util.Collections;
 
 public class Deck{
 
-    ArrayList<Card> cards;
-    int nCards;
+    List<Card> cards;
+    List<Hand> hands;
 
     public Deck() {
+        cards = new ArrayList<Card>();
     }
 
-    public ArrayList<Hand> createDeck(int nHands){
-        nCards = 51;
-        cards = new ArrayList<Card>(52);
+    public List<Hand> createDeck(int nHands){
 
        int x=0;
        for(Rank rank: Rank.values()){
@@ -32,27 +32,29 @@ public class Deck{
        return generateHands(nHands);
     }
 
-    private ArrayList<Hand> generateHands(int nHands){
-        ArrayList<Hand> hands = null;
+    private List<Hand> generateHands(int nHands){
         String c1;
         String c2;
         String c3;
         String c4;
         String c5;
 
-        hands = new ArrayList<Hand>(nHands);
-        for (int i= 0; i< nHands; i++){
+        hands = new ArrayList<Hand>();
+        List<Card> cardList = cards;
 
-            c1= Rank.nameConverter(cards.get(0).getRank().toString()) + Suit.NameConverter(cards.get(0).getSuit().toString());
-            c2= Rank.nameConverter(cards.get(1).getRank().toString()) + Suit.NameConverter(cards.get(1).getSuit().toString());
-            c3= Rank.nameConverter(cards.get(2).getRank().toString()) + Suit.NameConverter(cards.get(2).getSuit().toString());
-            c4= Rank.nameConverter(cards.get(3).getRank().toString()) + Suit.NameConverter(cards.get(3).getSuit().toString());
-            c5= Rank.nameConverter(cards.get(4).getRank().toString()) + Suit.NameConverter(cards.get(4).getSuit().toString());
+        for (int i= 0; i<= nHands; i++){
+
+            c1= Rank.nameConverter(cardList.get(0).getRank().toString()) + Suit.NameConverter(cardList.get(0).getSuit().toString());
+            c2= Rank.nameConverter(cardList.get(1).getRank().toString()) + Suit.NameConverter(cardList.get(1).getSuit().toString());
+            c3= Rank.nameConverter(cardList.get(2).getRank().toString()) + Suit.NameConverter(cardList.get(2).getSuit().toString());
+            c4= Rank.nameConverter(cardList.get(3).getRank().toString()) + Suit.NameConverter(cardList.get(3).getSuit().toString());
+            c5= Rank.nameConverter(cardList.get(4).getRank().toString()) + Suit.NameConverter(cardList.get(4).getSuit().toString());
 
             for(int j = 0; j<=5 ; j++){
-                cards.remove(i);
+                cardList.remove(j);
             }
             hands.add(new Hand(c1,c2,c3,c4,c5));
+            cardList.size();
         }
         return hands;
     }

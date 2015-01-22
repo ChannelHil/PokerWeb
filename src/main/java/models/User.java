@@ -16,8 +16,8 @@ public class User {
     public String password;
     public byte[] salt;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private  List<GameHistory> gameHistory;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private  List<Game_History> gameHistory;
 
     public User() {
     }

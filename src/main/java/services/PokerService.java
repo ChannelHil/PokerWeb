@@ -23,7 +23,7 @@ public class PokerService implements IPokerService {
     public Hand dealHand() {
         Deck deck = new Deck();
         //TODO change to dynamic
-        ArrayList<Hand> hands = deck.createDeck(1);
+        List<Hand> hands = deck.createDeck(1);
         boolean handDisplayed = false;
         if (hands.isEmpty()) {
             return null;

@@ -8,8 +8,10 @@ import ninja.Router;
 import ninja.session.FlashScope;
 import ninja.session.Session;
 import services.AuthenticationService;
+import services.PlayGameService;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by Channel on 2015-01-16.
@@ -20,6 +22,11 @@ public class AuthenticationController {
 
     @Inject
     Router router;
+
+    @Inject
+    private PlayGameService playGameService;
+
+    int numberPlayers = 4;
 
     public Result login(FlashScope flashScope, Context context) {
         Result result = Results.html();
@@ -50,6 +57,13 @@ public class AuthenticationController {
                 return Results.html();
 
             case "POST":
+                List<String> users = playGameService.getPlayers(numberPlayers);
+                if(users.isEmpty()){
+                    authenticationService.register("cpu1","cpu");
+                    authenticationService.register("cpu2","cpu");
+                    authenticationService.register("cpu3","cpu");
+                    authenticationService.register("cpu4","cpu");
+                }
                 String username = context.getParameter("login");
                 String password = context.getParameter("password");
 

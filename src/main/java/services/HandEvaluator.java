@@ -31,6 +31,7 @@ public class HandEvaluator {
         }
     }
 
+
     public static boolean isFlushFunctional(Hand hand) {
         List<Rank> ranks = hand.getCards().stream().map(c->c.getRank()).collect(Collectors.toList());
         //ispresent to test for null

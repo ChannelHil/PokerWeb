@@ -8,10 +8,10 @@ import java.util.List;
  * Created by Channel on 2015-01-21.
  */
 @Entity
-public class GameHistory {
+public class Game_History {
 
     @ManyToOne (fetch = FetchType.LAZY)
-    private User users;
+    private User user;
 
     @Enumerated(EnumType.ORDINAL)
     private Result result;
@@ -27,22 +27,22 @@ public class GameHistory {
     @Temporal(TemporalType.DATE)
     private Date gameDate;
 
-    public GameHistory() {
+    public Game_History() {
     }
 
-    public GameHistory(User users, Result result, boolean winRound, Date gameDate) {
-        this.users = users;
+    public Game_History(User user, Result result, boolean winRound, Date gameDate) {
+        this.user = user;
         this.result = result;
         this.winRound = winRound;
         this.gameDate = gameDate;
     }
 
     public User getUsers() {
-        return users;
+        return user;
     }
 
-    public void setUsers(User users) {
-        this.users = users;
+    public void setUsers(User user) {
+        this.user = user;
     }
 
     public boolean isWinRound() {
