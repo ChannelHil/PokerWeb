@@ -18,6 +18,7 @@ package conf;
 
 
 import controllers.AuthenticationController;
+import controllers.HistoryController;
 import controllers.UserController;
 import ninja.AssetsController;
 import ninja.Router;
@@ -35,6 +36,8 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/register").with(AuthenticationController.class, "register");
         router.POST().route("/register").with(AuthenticationController.class, "register");
         router.GET().route("/user/{name}").with(UserController.class, "exists");
+        router.GET().route("/history").with(HistoryController.class, "history");
+        router.GET().route("/logout").with(AuthenticationController.class, "logout");
  
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)

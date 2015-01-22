@@ -1,7 +1,36 @@
 <#import "../layout/defaultLayout.ftl.html" as layout>
-    <@layout.myLayout "Home page">
+    <@layout.myLayout "History">
 
-    <div style="opacity: 1">
+    <div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Game Number</th>
+                <th>User</th>
+                <th>Result</th>
+                <th>Win Date</th>
+            </tr>
+            <#list game_histories as game_test>
+                <tr>
+                    <td>
+                        ${game_test.id}
+                    </td>
+                    <td>
+                        ${game_test.user.username}
+                    </td>
+                    <td>
+                        ${game_test.result}
+                    </td>
+                    <td>
+                        ${game_test.gameDate}
+                    </td>
+                </tr>
+            </#list>
+            </thead>
+            <tbody>
 
+            </tbody>
+
+        </table>
     </div>
 </@layout.myLayout>

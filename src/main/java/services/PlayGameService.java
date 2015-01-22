@@ -35,4 +35,9 @@ public class PlayGameService {
         Optional<User> user= userRepository.findUserByUName(username);
         return user.get();
     }
+
+    public List<Game_History> getGameHistory(String username){
+        List<Game_History> game_history= gameRepository.retrieveHistory(username);
+        return game_history;
+    }
 }

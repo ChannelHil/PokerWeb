@@ -13,6 +13,7 @@ public class UserController {
     @Inject
     AuthenticationService authenticationService;
 
+
     public Result exists(@PathParam("name") String username){
         SimplePojo simplePojo = new SimplePojo();
         simplePojo.exists = authenticationService.usernameInUse(username);

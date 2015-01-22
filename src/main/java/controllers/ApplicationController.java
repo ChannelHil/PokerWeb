@@ -54,12 +54,13 @@ public class ApplicationController {
 
     int numberPlayers = 4;
     int winner = 0;
-    User u = new User();
+
 
     @FilterWith(SecureFilter.class)
     public Result index(Context context) {
         Result result = Results.html();
         setPokerService(pokerService);
+        User u = new User();
 
         List<Hand> hands = pokerService.dealHands(numberPlayers);
         List<String> users = playGameService.getPlayers(numberPlayers);
@@ -97,7 +98,7 @@ public class ApplicationController {
                 switch (strength) {
                     case 0:
                         result.render("result" + i, "Nothing");
-                        resultEnum = models.Result.NOTHING;
+                        resultEnum = models.Result.HIGH_CARD;
                         break;
                     case 1:
                         result.render("result" + i, "Pair");

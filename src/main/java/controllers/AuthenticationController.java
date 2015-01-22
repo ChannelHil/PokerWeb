@@ -40,13 +40,14 @@ public class AuthenticationController {
                 String password = context.getParameter("password");
 
                 if (authenticationService.authenticate(username, password)) {
+                    context.getSession().put("login", username);
                     return result.html().redirect("/index");
                 } else {
                     context.getSession().clear();
                     flashScope.error("Login Failed");
                 }
         }
-        return Results.html();
+        return result;
     }
 
     public Result register(FlashScope flashScope, Context context) {
@@ -59,10 +60,10 @@ public class AuthenticationController {
             case "POST":
                 List<String> users = playGameService.getPlayers(numberPlayers);
                 if(users.isEmpty()){
-                    authenticationService.register("cpu1","cpu");
-                    authenticationService.register("cpu2","cpu");
-                    authenticationService.register("cpu3","cpu");
-                    authenticationService.register("cpu4","cpu");
+                    authenticationService.register("comp1","cpu");
+                    authenticationService.register("comp2","cpu");
+                    authenticationService.register("comp3","cpu");
+                    authenticationService.register("comp4","cpu");
                 }
                 String username = context.getParameter("login");
                 String password = context.getParameter("password");
@@ -80,7 +81,7 @@ public class AuthenticationController {
                     }
                 }
         }
-        return Results.html();
+        return result;
     }
 
 

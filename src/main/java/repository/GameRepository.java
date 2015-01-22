@@ -19,8 +19,8 @@ public class GameRepository extends BaseRepository<Game_History>{
     @Inject
     Game_History gameHistory;
 
-    public void insertHistory(Result result, boolean winround, Date gamedate){
-        //getEntityManager().createQuery("INSERT INTO GAME_HISTORY (RESULT, WINROUND,GAMEDATE) VALUES ('result',winround','gamedate'));
+    public List<Game_History> retrieveHistory(String username){
+        List<Game_History> gh = (getEntityManager().createQuery("SELECT gh FROM GAME_HISTORY gh WHERE gh.user.username=:username").setParameter("username", username)).getResultList();
+        return gh;
     }
-
 }

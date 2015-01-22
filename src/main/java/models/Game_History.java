@@ -1,31 +1,32 @@
 package models;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Channel on 2015-01-21.
  */
-@Entity
+@Entity(name = "GAME_HISTORY")
 public class Game_History {
 
     @ManyToOne (fetch = FetchType.LAZY)
-    private User user;
+    public User user;
 
     @Enumerated(EnumType.ORDINAL)
-    private Result result;
+    public Result result;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long id;
+    public Long id;
 
     public Long getId() {
         return id;
     }
-   private boolean winRound;
+    public boolean winRound;
 
     @Temporal(TemporalType.DATE)
-    private Date gameDate;
+    public Date gameDate;
 
     public Game_History() {
     }
@@ -59,5 +60,10 @@ public class Game_History {
 
     public void setGameDate(Date gameDate) {
         this.gameDate = gameDate;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(gameDate);
     }
 }
