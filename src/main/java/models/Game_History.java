@@ -11,8 +11,11 @@ import java.util.List;
 @Entity(name = "GAME_HISTORY")
 public class Game_History {
 
-    @ManyToOne (fetch = FetchType.LAZY)
-    public User user;
+    //@ManyToOne (fetch = FetchType.LAZY)
+    //public User user;
+
+    @ManyToMany
+    public List<User> user;
 
     @Enumerated(EnumType.ORDINAL)
     public Result result;
@@ -23,35 +26,38 @@ public class Game_History {
     public Long getId() {
         return id;
     }
-    public boolean winRound;
+    public String winUsername;
 
     @Temporal(TemporalType.DATE)
     public Date gameDate;
 
+
+
+
     public Game_History() {
     }
 
-    public Game_History(User user, Result result, boolean winRound, Date gameDate) {
-        this.user = user;
+    public Game_History(Result result, String winUsername, Date gameDate, List<User> user) {
         this.result = result;
-        this.winRound = winRound;
+        this.winUsername = winUsername;
         this.gameDate = gameDate;
+        this.user = user;
     }
 
-    public User getUsers() {
+    public List<User> getUser() {
         return user;
     }
 
-    public void setUsers(User user) {
+    public void setUser(List<User> user) {
         this.user = user;
     }
 
-    public boolean isWinRound() {
-        return winRound;
+    public String getWinUsername() {
+        return winUsername;
     }
 
-    public void setWinRound(boolean winRound) {
-        this.winRound = winRound;
+    public void setWinUsername(String winUsername) {
+        this.winUsername = winUsername;
     }
 
     public Date getGameDate() {
@@ -65,5 +71,10 @@ public class Game_History {
     @Override
     public String toString() {
         return String.valueOf(gameDate);
+    }
+
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -33,6 +33,7 @@ import services.IPokerService;
 import services.PlayGameService;
 import services.PokerService;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -62,96 +63,108 @@ public class ApplicationController {
         setPokerService(pokerService);
         User u = new User();
 
-        List<Hand> hands = pokerService.dealHands(numberPlayers);
-        List<String> users = playGameService.getPlayers(numberPlayers);
-        if (users.size() != 4) {
-            //Not valid play
-        }
-
-
-        int winHandStrenght = 0;
-        boolean firstRun = true;
         Session session = context.getSession();
         String username = session.get("login");
 
+        User loggedInUser=u = playGameService.findUser(username);
+        List<User> users = new ArrayList<User>();
+        users.add(u);
+        users.add(playGameService.getPlayers().get(0));
+        users.add(playGameService.getPlayers().get(1));
+        users.add(playGameService.getPlayers().get(2));
 
-            for (int i = 0; i < hands.size(); i++) {
-                if (firstRun) {
-                    winner = i;
-                    firstRun = false;
-                }else{
-                    String n = users.get(i).toString();
-                    result.render("user" + i, n);
-                }
+        List<Hand> hands = pokerService.dealHands(users);
 
-                List<Card> c = hands.get(i).getCards();
-
-                result.render("cOne" + i, c.get(0).getRank() + "_" + c.get(0).getSuit() + ".png");
-                result.render("cTwo" + i, c.get(1).getRank() + "_" + c.get(1).getSuit() + ".png");
-                result.render("cThree" + i, c.get(2).getRank() + "_" + c.get(2).getSuit() + ".png");
-                result.render("cFour" + i, c.get(3).getRank() + "_" + c.get(3).getSuit() + ".png");
-                result.render("cFive" + i, c.get(4).getRank() + "_" + c.get(4).getSuit() + ".png");
-
-
-                //TODO move to controller
-                int strength = pokerService.evaluateHand(hands.get(i));
-                switch (strength) {
-                    case 0:
-                        result.render("result" + i, "Nothing");
-                        resultEnum = models.Result.HIGH_CARD;
-                        break;
-                    case 1:
-                        result.render("result" + i, "Pair");
-                        resultEnum = models.Result.PAIR;
-                        break;
-                    case 2:
-                        result.render("result" + i, "2 Pair");
-                        resultEnum = models.Result.TWO_PAIR;
-                        break;
-                    case 3:
-                        result.render("result" + i, "3 of a Kind");
-                        resultEnum = models.Result.THREE_OF_A_KIND;
-                        break;
-                    case 4:
-                        result.render("result" + i, "Straight");
-                        resultEnum = models.Result.STRAIGHT;
-                        break;
-                    case 5:
-                        result.render("result" + i, "Flush");
-                        resultEnum = models.Result.FLUSH;
-                        break;
-                    case 6:
-                        result.render("result" + i, "Full House");
-                        resultEnum = models.Result.FULL_HOUSE;
-                        break;
-                    case 7:
-                        result.render("result" + i, "4 of a Kind");
-                        resultEnum = models.Result.FOUR_OF_A_KIND;
-                        break;
-                    case 8:
-                        result.render("result" + i, "Straight Flush");
-                        resultEnum = models.Result.STRAIGHT_FLUSH;
-                        break;
-                }
-                if (strength > winHandStrenght) {
-                    winHandStrenght = strength;
-                    winner = i;
-                }
-            }
-            //result.render("result" + counter, pokerService.evaluateHand(hand));
+       /* List<Hand> hands = pokerService.dealHands(numberPlayers);
+        if (users.size() != 4) {
+            //Not valid play
+        }
+*/
+        int winHandStrenght = 0;
+        boolean firstRun = true;
 
 
+        //result.render("users", users);
+        result.render("hands", hands);
 
-            if (winner == 0) {
-                u = playGameService.findUser(username);
-                result.render("winner", "YOU");
+        for (int i = 0; i < hands.size(); i++) {
+            if (firstRun) {
+                winner = i;
+                firstRun = false;
             } else {
-                u = playGameService.findUser(users.get(winner));
-                result.render("winner", users.get(winner).toString() + "");
+                String n = users.get(i).getUsername().toString();
+                result.render("user" + i, n);
             }
+
+            List<Card> c = hands.get(i).getCards();
+
+            result.render("cOne" + i, c.get(0).getRank() + "_" + c.get(0).getSuit() + ".png");
+            result.render("cTwo" + i, c.get(1).getRank() + "_" + c.get(1).getSuit() + ".png");
+            result.render("cThree" + i, c.get(2).getRank() + "_" + c.get(2).getSuit() + ".png");
+            result.render("cFour" + i, c.get(3).getRank() + "_" + c.get(3).getSuit() + ".png");
+            result.render("cFive" + i, c.get(4).getRank() + "_" + c.get(4).getSuit() + ".png");
+
+
+            //TODO move to controller
+            int strength = pokerService.evaluateHand(hands.get(i));
+            switch (strength) {
+                case 0:
+                    result.render("result" + i, "Nothing");
+                    resultEnum = models.Result.HIGH_CARD;
+                    break;
+                case 1:
+                    result.render("result" + i, "Pair");
+                    resultEnum = models.Result.PAIR;
+                    break;
+                case 2:
+                    result.render("result" + i, "2 Pair");
+                    resultEnum = models.Result.TWO_PAIR;
+                    break;
+                case 3:
+                    result.render("result" + i, "3 of a Kind");
+                    resultEnum = models.Result.THREE_OF_A_KIND;
+                    break;
+                case 4:
+                    result.render("result" + i, "Straight");
+                    resultEnum = models.Result.STRAIGHT;
+                    break;
+                case 5:
+                    result.render("result" + i, "Flush");
+                    resultEnum = models.Result.FLUSH;
+                    break;
+                case 6:
+                    result.render("result" + i, "Full House");
+                    resultEnum = models.Result.FULL_HOUSE;
+                    break;
+                case 7:
+                    result.render("result" + i, "4 of a Kind");
+                    resultEnum = models.Result.FOUR_OF_A_KIND;
+                    break;
+                case 8:
+                    result.render("result" + i, "Straight Flush");
+                    resultEnum = models.Result.STRAIGHT_FLUSH;
+                    break;
+            }
+            if (strength > winHandStrenght) {
+                winHandStrenght = strength;
+                winner = i;
+            }
+        }
+        //result.render("result" + counter, pokerService.evaluateHand(hand));
+
+        //result.render("hands", cardName);
+
+        if (winner == 0) {
+            u = playGameService.findUser(username);
+            result.render("winner", "YOU");
+        } else {
+            u = playGameService.findUser(users.get(winner).getUsername());
+            result.render("winner", users.get(winner).getUsername().toString() + "");
+        }
 
         //TODO add to table
-        playGameService.addWinnerToHistory(u,resultEnum,true, new Date());
+        users.remove(0);
+        //playGameService.addWinnerToHistory(users,users.get(winner).getUsername().toString(),resultEnum, new Date());
 
         return result;
 
@@ -159,5 +172,11 @@ public class ApplicationController {
 
     public void setPokerService(IPokerService iPokerService) {
         this.pokerService = iPokerService;
+    }
+
+    @FilterWith(SecureFilter.class)
+    public Result play(Context context) {
+        Result result = Results.html();
+        return result;
     }
 }

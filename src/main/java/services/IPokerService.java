@@ -2,6 +2,7 @@ package services;
 
 
 import models.Hand;
+import models.User;
 
 import java.util.List;
 
@@ -15,7 +16,6 @@ public interface IPokerService {
     //Add high card
 //String evaluateHand(Hand hand);
 
-    Hand dealHand();
-    List<Hand> dealHands(int numberHands);
+    List<Hand> dealHands(List<User> users);
     int evaluateHand(Hand hand);
 }

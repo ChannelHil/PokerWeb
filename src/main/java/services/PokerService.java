@@ -3,6 +3,7 @@ package services;
 import com.google.inject.Singleton;
 import models.Deck;
 import models.Hand;
+import models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,30 +20,12 @@ public class PokerService implements IPokerService {
         return name;
     }
 
-    @Override
-    public Hand dealHand() {
-        Deck deck = new Deck();
-        //TODO change to dynamic
-        List<Hand> hands = deck.createDeck(1);
-        boolean handDisplayed = false;
-        if (hands.isEmpty()) {
-            return null;
-        } else {
-            for (Hand h : hands) {
-                if (!handDisplayed) {
-                    handDisplayed = true;
-                    return h;
 
-                }
-            }
-        }
-        return null;
-    }
 
     @Override
-    public List<Hand> dealHands(int numberHands) {
+    public List<Hand> dealHands(List<User> users) {
         Deck deck = new Deck();
-        return deck.createDeck(numberHands);
+        return deck.createDeck(users);
     }
 
     @Override

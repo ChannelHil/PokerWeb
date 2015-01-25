@@ -16,8 +16,14 @@ public class User {
     public String password;
     public byte[] salt;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    //@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    //public  List<Game_History> game_history;
+
+    @ManyToMany
     public  List<Game_History> game_history;
+
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "user")
+    public List<Hand> hands;
 
     public User() {
     }
@@ -50,5 +56,13 @@ public class User {
 
     public void setSalt(byte[] salt) {
         this.salt = salt;
+    }
+
+    public List<Hand> getHands() {
+        return hands;
+    }
+
+    public void setHands(List<Hand> hands) {
+        this.hands = hands;
     }
 }

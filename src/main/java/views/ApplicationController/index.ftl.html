@@ -4,6 +4,12 @@
     <div style="opacity: 1">
         <h1>Poker Hand Winner is: ${winner}</h1>
 
+
+                <#list hands as hand>
+                    <h2>${hand.user.username} has ${result0}</h2>
+                </#list>
+        <img id= "cardImg" src="/assets/images/cards/${cOne0}" style="width:150px;height:228px">
+
         <h2>You have a ${result0}</h2>
         <img src="/assets/images/cards/${cOne0}" style="width:150px;height:228px">
         <img src="/assets/images/cards/${cTwo0}" style="width:150px;height:228px">

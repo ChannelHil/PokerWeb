@@ -7,6 +7,7 @@ import models.User;
 import repository.GameRepository;
 import repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -22,13 +23,14 @@ public class PlayGameService {
     @Inject
     UserRepository userRepository;
 
-    public void addWinnerToHistory(User user, Result result, boolean won,Date date){
-        Game_History gameHistory = new Game_History(user,result,won,date);
+    public void addWinnerToHistory(List<User> users, String userWinner, Result result,Date date){
+
+        Game_History gameHistory = new Game_History(result,userWinner,date,users);
         gameRepository.persist(gameHistory);
     }
 
-    public List<String> getPlayers(int numberPlayers){
-        return userRepository.getPlayers(numberPlayers);
+    public List<User> getPlayers(){
+        return userRepository.getPlayers();
     }
 
     public User findUser(String username){

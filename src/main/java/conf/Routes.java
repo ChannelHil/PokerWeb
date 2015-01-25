@@ -38,6 +38,7 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/user/{name}").with(UserController.class, "exists");
         router.GET().route("/history").with(HistoryController.class, "history");
         router.GET().route("/logout").with(AuthenticationController.class, "logout");
+        router.GET().route("/play").with(ApplicationController.class, "play");
  
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)

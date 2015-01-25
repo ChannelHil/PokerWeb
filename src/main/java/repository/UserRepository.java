@@ -27,9 +27,9 @@ public class UserRepository extends BaseRepository<User>{
     }
 
 
-    public List<String> getPlayers(int numberPlayers) {
+    public List<User> getPlayers() {
         //return getEntityManager().createQuery("SELECT u.username FROM User u LIMIT " + numberPlayers).getResultList();
-        return getEntityManager().createQuery("SELECT username FROM User").getResultList();
+        return getEntityManager().createQuery("SELECT u FROM User u").getResultList();
     }
 
 }

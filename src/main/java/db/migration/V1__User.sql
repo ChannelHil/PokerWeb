@@ -5,8 +5,25 @@ CREATE TABLE user(
     primary key(username)
 );
 
+CREATE TABLE game_history(
+    id BIGINT  AUTO_INCREMENT,
+    result  VARCHAR(50) NOT NULL,
+    winUsername VARCHAR(12),
+    GAMEDATE DATE,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE game_history_user(
+    user_username BIGINT NOT NULL AUTO_INCREMENT,
+    game_history_id BIGINT NOT NULL AUTO_INCREMENT,
+    FOREIGN KEY (user_username) REFERENCES user (username),
+    FOREIGN KEY (game_history_id) REFERENCES game_history (id)
+);
+
 CREATE TABLE hand(
-    id BIGINT NOT NULL AUTO_INCREMENT,
+    id BIGINT  AUTO_INCREMENT,
+    USER_USERNAME VARCHAR(12),
+    FOREIGN KEY (USER_USERNAME) REFERENCES USER (USERNAME),
     PRIMARY KEY (id)
 );
 
@@ -17,12 +34,16 @@ CREATE TABLE card(
     PRIMARY KEY (id)
 );
 
-CREATE TABLE game_history(
-    id BIGINT NOT NULL AUTO_INCREMENT,
-    result  VARCHAR(50) NOT NULL,
-    WINROUND BOOLEAN,
-    GAMEDATE DATE,
-    USER_USERNAME VARCHAR(12),
-    FOREIGN KEY (USER_USERNAME) REFERENCES USER (USERNAME),
-    PRIMARY KEY (id)
+CREATE TABLE hand_card(
+    hand_id BIGINT NOT NULL AUTO_INCREMENT,
+    card_id BIGINT NOT NULL AUTO_INCREMENT,
+    FOREIGN KEY (hand_id) REFERENCES hand (id),
+    FOREIGN KEY (card_id) REFERENCES card (id)
+);
+
+CREATE TABLE hand_game_history(
+    hand_id BIGINT NOT NULL AUTO_INCREMENT,
+    game_history_id BIGINT NOT NULL AUTO_INCREMENT,
+    FOREIGN KEY (hand_id) REFERENCES hand (id),
+    FOREIGN KEY (game_history_id) REFERENCES game_history (id)
 );

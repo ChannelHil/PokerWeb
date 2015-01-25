@@ -1,6 +1,7 @@
 package controllers;
 
 import com.google.inject.Inject;
+import models.User;
 import ninja.Context;
 import ninja.Result;
 import ninja.Results;
@@ -58,7 +59,7 @@ public class AuthenticationController {
                 return Results.html();
 
             case "POST":
-                List<String> users = playGameService.getPlayers(numberPlayers);
+                List<User> users = playGameService.getPlayers();
                 if(users.isEmpty()){
                     authenticationService.register("comp1","cpu");
                     authenticationService.register("comp2","cpu");
