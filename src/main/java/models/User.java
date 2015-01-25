@@ -19,11 +19,8 @@ public class User {
     //@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     //public  List<Game_History> game_history;
 
-    @ManyToMany
-    public  List<Game_History> game_history;
-
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "user")
-    public List<Hand> hands;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    public  List<User_Game> user_games;
 
     public User() {
     }
@@ -58,11 +55,4 @@ public class User {
         this.salt = salt;
     }
 
-    public List<Hand> getHands() {
-        return hands;
-    }
-
-    public void setHands(List<Hand> hands) {
-        this.hands = hands;
-    }
 }

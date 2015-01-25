@@ -23,9 +23,9 @@ public class PokerService implements IPokerService {
 
 
     @Override
-    public List<Hand> dealHands(List<User> users) {
+    public List<Hand> dealHands(int number) {
         Deck deck = new Deck();
-        return deck.createDeck(users);
+        return deck.createDeck(number);
     }
 
     @Override
@@ -54,4 +54,15 @@ public class PokerService implements IPokerService {
 
         return result;
     }
+
+    //join
+    //retrieve game (game id), create new player game and set user and persist.
+    //when start below..
+
+
+    //new
+    //create new game with user (host and persist)
+    // when start game takes id of game retrieve game, deal hands and the result and persist
+    // playergame
+    //sethands and users and result and finally add to game
 }

@@ -6,9 +6,11 @@
 
 
                 <#list hands as hand>
-                    <h2>${hand.user.username} has ${result0}</h2>
+                    <#list hand.cards as card>
+                        <img src="/assets/images/cards/${card.rank}_${card.suit}.png" style="width:150px;height:228px">
+                    </#list>
+                    <br><br><br><br><br>
                 </#list>
-        <img id= "cardImg" src="/assets/images/cards/${cOne0}" style="width:150px;height:228px">
 
         <h2>You have a ${result0}</h2>
         <img src="/assets/images/cards/${cOne0}" style="width:150px;height:228px">

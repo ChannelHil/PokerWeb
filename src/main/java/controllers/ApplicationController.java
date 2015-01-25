@@ -73,7 +73,8 @@ public class ApplicationController {
         users.add(playGameService.getPlayers().get(1));
         users.add(playGameService.getPlayers().get(2));
 
-        List<Hand> hands = pokerService.dealHands(users);
+        //TODO change
+        List<Hand> hands = pokerService.dealHands(4);
 
        /* List<Hand> hands = pokerService.dealHands(numberPlayers);
         if (users.size() != 4) {

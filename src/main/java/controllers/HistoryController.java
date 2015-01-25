@@ -2,12 +2,11 @@ package controllers;
 
 import com.google.inject.Inject;
 import filters.SecureFilter;
-import models.Game_History;
+import models.Game;
 import ninja.Context;
 import ninja.FilterWith;
 import ninja.Result;
 import ninja.Results;
-import ninja.params.PathParam;
 import ninja.session.Session;
 import services.PlayGameService;
 
@@ -26,7 +25,7 @@ public class HistoryController {
         Result result = Results.html();
         Session session = context.getSession();
         String username = session.get("login");
-        List<Game_History> game_histories = playGameService.getGameHistory(username);
+        List<Game> game_histories = playGameService.getGameHistory(username);
         /*game_histories.clear();
         Game_History game = new Game_History();
         game.id = 12L;

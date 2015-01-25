@@ -27,7 +27,7 @@ public class Deck{
         cards = new ArrayList<Card>();
     }
 
-    public List<Hand> createDeck(List<User> users){
+    public List<Hand> createDeck(int number){
 
         int x=0;
         for(Rank rank: Rank.values()){
@@ -36,9 +36,9 @@ public class Deck{
             }
         }
         Collections.shuffle(cards);
-        return generateHandsUser(users);
+        return generateHandsUser(number);
     }
-    private List<Hand> generateHandsUser(List<User> users){
+    private List<Hand> generateHandsUser(int number){
         String c1;
         String c2;
         String c3;
@@ -48,7 +48,7 @@ public class Deck{
         hands = new ArrayList<Hand>();
         List<Card> cardList = cards;
 
-        for (int i= 0; i< users.size(); i++){
+        for (int i= 0; i< number; i++){
 
             c1= Rank.nameConverter(cardList.get(0).getRank().toString()) + Suit.NameConverter(cardList.get(0).getSuit().toString());
             c2= Rank.nameConverter(cardList.get(1).getRank().toString()) + Suit.NameConverter(cardList.get(1).getSuit().toString());
@@ -59,8 +59,7 @@ public class Deck{
             for(int j = 0; j<=5 ; j++){
                 cardList.remove(j);
             }
-            Hand h = new Hand(c1,c2,c3,c4,c5,users.get(i));
-            handRepository.persist(h);
+            Hand h = new Hand(c1,c2,c3,c4,c5);
             hands.add(h);
         }
         return hands;

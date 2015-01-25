@@ -16,6 +16,6 @@ public interface IPokerService {
     //Add high card
 //String evaluateHand(Hand hand);
 
-    List<Hand> dealHands(List<User> users);
+    List<Hand> dealHands(int number);
     int evaluateHand(Hand hand);
 }

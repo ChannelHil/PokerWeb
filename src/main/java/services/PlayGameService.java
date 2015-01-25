@@ -1,13 +1,12 @@
 package services;
 
 import com.google.inject.Inject;
-import models.Game_History;
+import models.Game;
 import models.Result;
 import models.User;
 import repository.GameRepository;
 import repository.UserRepository;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -23,9 +22,9 @@ public class PlayGameService {
     @Inject
     UserRepository userRepository;
 
-    public void addWinnerToHistory(List<User> users, String userWinner, Result result,Date date){
+    public void addWinnerToHistory(Date date){
 
-        Game_History gameHistory = new Game_History(result,userWinner,date,users);
+        Game gameHistory = new Game(date);
         gameRepository.persist(gameHistory);
     }
 
@@ -38,8 +37,8 @@ public class PlayGameService {
         return user.get();
     }
 
-    public List<Game_History> getGameHistory(String username){
-        List<Game_History> game_history= gameRepository.retrieveHistory(username);
-        return game_history;
+    public List<Game> getGameHistory(String username){
+        List<Game> game = gameRepository.retrieveHistory(username);
+        return game;
     }
 }

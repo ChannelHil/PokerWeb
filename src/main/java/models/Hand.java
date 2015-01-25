@@ -13,13 +13,16 @@ public class Hand{
 
 String name;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "hand_card", joinColumns = {@JoinColumn( name = "hand_id")},
+    inverseJoinColumns = {@JoinColumn(name = "card_suit", referencedColumnName = "suit"),
+            @JoinColumn(name = "card_rank", referencedColumnName = "rank")})
     List<Card> cards;
 
-    @ManyToMany
-    List<Game_History> game_histories;
+    @OneToOne (cascade = CascadeType.ALL)
+    User_Game user_game;
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.ALL)
     User user;
 
     @Id
@@ -30,7 +33,7 @@ String name;
         return id;
     }
 
-    public Hand(String h1,String h2,String h3,String h4,String h5, User user) {
+    public Hand(String h1,String h2,String h3,String h4,String h5) {
         cards = new ArrayList<Card>();
 
         cards.add(new Card(h1.substring(1), h1.substring(0, 1)));
@@ -39,7 +42,6 @@ String name;
         cards.add(new Card(h4.substring(1), h4.substring(0, 1)));
         cards.add(new Card(h5.substring(1), h5.substring(0, 1)));
         setCardList(cards);
-        this.user=user;
 
     }
 
@@ -55,13 +57,6 @@ String name;
         this.id = id;
     }
 
-    public List<Game_History> getGame_histories() {
-        return game_histories;
-    }
-
-    public void setGame_histories(List<Game_History> game_histories) {
-        this.game_histories = game_histories;
-    }
 
     public User getUser() {
         return user;

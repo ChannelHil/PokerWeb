@@ -1,43 +1,35 @@
 package models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Channel on 2015-01-09.
  */
 @Entity
-public class Card{
+public class Card implements Serializable{
+
+    @EmbeddedId
+    Rank_Suit rank_suit;
 
     @ManyToMany
-    private List<Hand> hands;
+    List<Hand> hands;
 
-    @Enumerated(EnumType.STRING)
-    private Suit suit;
 
-    @Enumerated(EnumType.STRING)
-    private Rank rank;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long id;
-
-    public Long getId() {
-        return id;
-    }
     public Card() {
     }
 
     public Card(Suit suit, Rank rank) {
-        this.suit = suit;
-        this.rank = rank;
+        rank_suit = new Rank_Suit(suit,rank);
     }
 
     public Card(String suit, String rank) {
-        this.suit=determineSuit(suit);
-        this.rank=determineRank(rank);
+        rank_suit = new Rank_Suit();
+        rank_suit.setSuit(determineSuit(suit));
+        rank_suit.setRank(determineRank(rank));
     }
-    private Rank determineRank(String rank){
+    public Rank determineRank(String rank){
         for (Rank r: Rank.values()){
             if (r.equalRank(rank)){
                 return r;
@@ -46,7 +38,7 @@ public class Card{
         }
         return null;
     }
-    private Suit determineSuit(String suit){
+    public Suit determineSuit(String suit){
         for (Suit s: Suit.values()){
             if (s.equalSuit(suit)){
                 return s;
@@ -57,18 +49,25 @@ public class Card{
     }
 
     public Suit getSuit() {
-        return suit;
+        if(rank_suit==null){
+            return null;
+        }
+        return rank_suit.getSuit();
     }
 
     public Rank getRank() {
-        return rank;
+        if(rank_suit==null){
+            return null;
+        }
+        return rank_suit.getRank();
     }
+
 
     @Override
     public String toString() {
         return "Card{" +
-                "suit=" + suit +
-                ", rank=" + rank +
+                "rank_suit=" + rank_suit +
+                ", hands=" + hands +
                 '}';
     }
 }
