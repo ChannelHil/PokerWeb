@@ -1,0 +1,11 @@
+<#import "../layout/defaultLayout.ftl.html" as layout>
+
+    <@layout.myLayout "Play">
+
+    <#list user_games as user_game>
+        <img src="/assets/images/cards/${card.rank}_${card.suit}.png" style="width:150px;height:228px">
+    </#list>
+
+
+    </input>
+</@layout.myLayout>

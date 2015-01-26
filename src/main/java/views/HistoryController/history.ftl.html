@@ -8,7 +8,8 @@
                 <th>Game Number</th>
                 <th>User</th>
                 <th>Result</th>
-                <th>Win Date</th>
+                <th>Win Round</th>
+                <th>Date</th>
             </tr>
             <#list game_histories as game_test>
                 <tr>
@@ -22,7 +23,10 @@
                         ${game_test.result}
                     </td>
                     <td>
-                        ${game_test.gameDate}
+                        ${game_test.winRound}
+                    </td>
+                    <td>
+                        ${game_test.game.gameDate}
                     </td>
                 </tr>
             </#list>

@@ -1,0 +1,14 @@
+<#import "../layout/defaultLayout.ftl.html" as layout>
+
+    <@layout.myLayout "Play">
+
+    <h2>${gamesPlay}</h2>
+
+    <#list games as game>
+        game.user.username
+        <input type="button" id="play", class="btn-group btn-group-lg" value="Play">
+    </#list>
+
+
+    </input>
+</@layout.myLayout>

@@ -11,13 +11,12 @@ import java.util.List;
 @Entity
 public class Game {
 
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "game")
-    public List<User_Game> user_games;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long id;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "game")
+    public List<User_Game> user_games;
 
     public Long getId() {
         return id;
@@ -26,6 +25,8 @@ public class Game {
     @Temporal(TemporalType.DATE)
     public Date gameDate;
 
+    @Enumerated(EnumType.STRING)
+    State state;
 
     public Game() {
     }
@@ -53,7 +54,15 @@ public class Game {
         this.id = id;
     }
 
-    //ADD player game
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+//ADD player game
     //set game to this check if games !=null
 
 }

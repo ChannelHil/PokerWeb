@@ -29,6 +29,9 @@ String name;
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
+    public Hand() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -64,6 +67,14 @@ String name;
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void addCard(Card card)
+    {
+        if (cards==null)
+            cards= new ArrayList<>();
+
+        cards.add(card);
     }
 
     @Override

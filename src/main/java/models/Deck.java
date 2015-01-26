@@ -39,28 +39,17 @@ public class Deck{
         return generateHandsUser(number);
     }
     private List<Hand> generateHandsUser(int number){
-        String c1;
-        String c2;
-        String c3;
-        String c4;
-        String c5;
-
         hands = new ArrayList<Hand>();
         List<Card> cardList = cards;
 
         for (int i= 0; i< number; i++){
+            Hand hand= new Hand();
 
-            c1= Rank.nameConverter(cardList.get(0).getRank().toString()) + Suit.NameConverter(cardList.get(0).getSuit().toString());
-            c2= Rank.nameConverter(cardList.get(1).getRank().toString()) + Suit.NameConverter(cardList.get(1).getSuit().toString());
-            c3= Rank.nameConverter(cardList.get(2).getRank().toString()) + Suit.NameConverter(cardList.get(2).getSuit().toString());
-            c4= Rank.nameConverter(cardList.get(3).getRank().toString()) + Suit.NameConverter(cardList.get(3).getSuit().toString());
-            c5= Rank.nameConverter(cardList.get(4).getRank().toString()) + Suit.NameConverter(cardList.get(4).getSuit().toString());
-
-            for(int j = 0; j<=5 ; j++){
-                cardList.remove(j);
+            for (int j=0;j<5;j++) {
+                hand.addCard(cardList.get(0));
+                cardList.remove(0);
             }
-            Hand h = new Hand(c1,c2,c3,c4,c5);
-            hands.add(h);
+            hands.add(hand);
         }
         return hands;
     }

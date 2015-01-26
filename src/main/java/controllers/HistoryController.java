@@ -3,6 +3,7 @@ package controllers;
 import com.google.inject.Inject;
 import filters.SecureFilter;
 import models.Game;
+import models.User_Game;
 import ninja.Context;
 import ninja.FilterWith;
 import ninja.Result;
@@ -25,7 +26,7 @@ public class HistoryController {
         Result result = Results.html();
         Session session = context.getSession();
         String username = session.get("login");
-        List<Game> game_histories = playGameService.getGameHistory(username);
+        List<User_Game> game_histories = playGameService.getGameHistory(username);
         /*game_histories.clear();
         Game_History game = new Game_History();
         game.id = 12L;
