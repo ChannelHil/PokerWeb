@@ -276,6 +276,17 @@ public class ApplicationController {
 
         asyncController.updateGameResult(id);
 
+        List<User_Game> user_games = playGameService.getGamePlayers(id);
+
+        if(user_games!=null) {
+            List<User> users = new ArrayList<User>();
+            for (User_Game user_game : user_games) {
+
+                users.add(user_game.getUser());
+            }
+            result.render("users", users);
+        }
+
         //playGameService.hostGame(username);
 
         return result;

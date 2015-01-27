@@ -2,16 +2,8 @@
 
     <@layout.myLayout "Play">
 
-    <#if games??>
-    <#list user_games as user_game>
-
-
-        <#list user_game.hand.cards as card>
-            <img src="/assets/images/cards/${card.rank}_${card.suit}.png" style="width:150px;height:228px">
-        </#list>
-        <br><br><br><br><br>
-    </#list>
-</#if>
-
+    <#include "/views/Fragments/player_list.ftl.html"/>
     </input>
 </@layout.myLayout>
+
+<script src="/assets/script/updatejoin.js" type="text/javascript"></script>

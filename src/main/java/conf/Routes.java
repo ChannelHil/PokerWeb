@@ -43,6 +43,7 @@ public class Routes implements ApplicationRoutes {
 
         //router.GET().route("/players").with(AsyncController.class, "view");
         router.GET().route("/gameUpdate").with(AsyncController.class, "gameUpdate");
+        //router.GET().route("/gameUpdate").with(AsyncController.class, "gameUpdate");
  
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)
