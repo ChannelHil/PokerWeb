@@ -226,6 +226,9 @@ public class ApplicationController {
         Long gameId = Long.parseLong(gameIdString);
 
         List<User_Game> user_games = playGameService.playGame(gameId);
+        Game game = playGameService.getPlayersGame(gameId);
+        game.setUser_games(user_games);
+
         result.render("user_games", user_games);
         //playGameService.hostGame(username);
 

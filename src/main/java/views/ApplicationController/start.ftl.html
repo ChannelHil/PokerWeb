@@ -3,6 +3,12 @@
     <@layout.myLayout "Play">
 
     <#list user_games as user_game>
+        User: ${user_game.user.username}
+        <br>
+        Result: ${user_game.result}
+        <br>
+        Win: ${user_game.winRound?c}
+        <br>
         <#list user_game.hand.cards as card>
             <img src="/assets/images/cards/${card.rank}_${card.suit}.png" style="width:150px;height:228px">
         </#list>
