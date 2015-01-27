@@ -8,15 +8,16 @@ CREATE TABLE user(
 CREATE TABLE game(
     id BIGINT  AUTO_INCREMENT,
     GAMEDATE DATE,
+    state VARCHAR(20),
     PRIMARY KEY (id)
 );
 
 CREATE TABLE user_game(
     id BIGINT  AUTO_INCREMENT,
-    user_username BIGINT NOT NULL AUTO_INCREMENT,
+    user_username VARCHAR(12) NOT NULL,
     game_id BIGINT NOT NULL AUTO_INCREMENT,
     winround BOOLEAN,
-    result  VARCHAR(50) NOT NULL,
+    result  VARCHAR(50),
     hand_id BIGINT,
     FOREIGN KEY (user_username) REFERENCES user (username),
     FOREIGN KEY (game_id) REFERENCES game(id),
@@ -25,6 +26,10 @@ CREATE TABLE user_game(
 
 CREATE TABLE hand(
     id BIGINT  AUTO_INCREMENT,
+    user_username VARCHAR(12),
+    user_game_id BIGINT,
+    FOREIGN KEY (user_username) REFERENCES user (username),
+    FOREIGN KEY (user_game_id) REFERENCES user_game(id),
     PRIMARY KEY (id)
 );
 
@@ -35,7 +40,7 @@ CREATE TABLE card(
 );
 
 CREATE TABLE hand_card(
-    hand_id BIGINT NOT NULL AUTO_INCREMENT,
+    hand_id BIGINT NOT NULL,
     card_rank INT NOT NULL,
     card_suit VARCHAR(10) NOT NULL,
     FOREIGN KEY (hand_id) REFERENCES hand (id),

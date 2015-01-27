@@ -11,23 +11,25 @@ import java.util.List;
 @Entity
 public class Hand{
 
-String name;
-
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "hand_card", joinColumns = {@JoinColumn( name = "hand_id")},
-    inverseJoinColumns = {@JoinColumn(name = "card_suit", referencedColumnName = "suit"),
-            @JoinColumn(name = "card_rank", referencedColumnName = "rank")})
+    @JoinTable(name="hand_card",
+            joinColumns={@JoinColumn(name="hand_id")},
+            inverseJoinColumns={@JoinColumn(name="card_suit", referencedColumnName="suit"),
+                    @JoinColumn(name="card_rank", referencedColumnName="rank")})
     List<Card> cards;
 
-    @OneToOne (cascade = CascadeType.ALL)
+    @OneToOne
     User_Game user_game;
 
-    @ManyToOne (cascade = CascadeType.ALL)
+    @ManyToOne
     User user;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
+
+    public Hand() {
+    }
 
     public Long getId() {
         return id;
@@ -64,6 +66,22 @@ String name;
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void addCard(Card card)
+    {
+        if (cards==null)
+            cards= new ArrayList<>();
+
+        cards.add(card);
+    }
+
+    public User_Game getUser_game() {
+        return user_game;
+    }
+
+    public void setUser_game(User_Game user_game) {
+        this.user_game = user_game;
     }
 
     @Override

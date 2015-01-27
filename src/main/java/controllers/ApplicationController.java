@@ -18,15 +18,14 @@ package controllers;
 
 import com.google.inject.Inject;
 import filters.SecureFilter;
-import models.Card;
-import models.Hand;
-import models.User;
+import models.*;
 import ninja.Context;
 import ninja.FilterWith;
 import ninja.Result;
 import ninja.Results;
 
 import com.google.inject.Singleton;
+import ninja.params.PathParam;
 import ninja.session.Session;
 import services.AuthenticationService;
 import services.IPokerService;
@@ -57,7 +56,7 @@ public class ApplicationController {
     int winner = 0;
 
 
-    @FilterWith(SecureFilter.class)
+   @FilterWith(SecureFilter.class)
     public Result index(Context context) {
         Result result = Results.html();
         setPokerService(pokerService);
@@ -67,6 +66,9 @@ public class ApplicationController {
         String username = session.get("login");
 
         User loggedInUser=u = playGameService.findUser(username);
+
+        //playGameService.hostGame(username);
+
         List<User> users = new ArrayList<User>();
         users.add(u);
         users.add(playGameService.getPlayers().get(0));
@@ -84,8 +86,8 @@ public class ApplicationController {
         int winHandStrenght = 0;
         boolean firstRun = true;
 
-
-        //result.render("users", users);
+        //TODO change to list of playergames
+        result.render("users", users);
         result.render("hands", hands);
 
         for (int i = 0; i < hands.size(); i++) {
@@ -97,13 +99,6 @@ public class ApplicationController {
                 result.render("user" + i, n);
             }
 
-            List<Card> c = hands.get(i).getCards();
-
-            result.render("cOne" + i, c.get(0).getRank() + "_" + c.get(0).getSuit() + ".png");
-            result.render("cTwo" + i, c.get(1).getRank() + "_" + c.get(1).getSuit() + ".png");
-            result.render("cThree" + i, c.get(2).getRank() + "_" + c.get(2).getSuit() + ".png");
-            result.render("cFour" + i, c.get(3).getRank() + "_" + c.get(3).getSuit() + ".png");
-            result.render("cFive" + i, c.get(4).getRank() + "_" + c.get(4).getSuit() + ".png");
 
 
             //TODO move to controller
@@ -171,6 +166,7 @@ public class ApplicationController {
 
     }
 
+
     public void setPokerService(IPokerService iPokerService) {
         this.pokerService = iPokerService;
     }
@@ -180,4 +176,106 @@ public class ApplicationController {
         Result result = Results.html();
         return result;
     }
+
+    @FilterWith(SecureFilter.class)
+    public Result host(Context context) {
+        //Result result = Results.html().redirect("/views/ApplicationController/play.ftl.html");
+        Result result = Results.html();
+        setPokerService(pokerService);
+        User u = new User();
+
+        Session session = context.getSession();
+        String username = session.get("login");
+
+        User loggedInUser= playGameService.findUser(username);
+
+        Long gameId = playGameService.hostGame(loggedInUser);
+        Game game = playGameService.getPlayersGame(gameId);
+
+        //List<User_Game> user_games = game.getUser_games();
+        List<User_Game> user_games = playGameService.getGamePlayers(gameId);
+
+        if(user_games!=null) {
+            List<User> users = new ArrayList<User>();
+            for (User_Game user_game : user_games) {
+
+                users.add(user_game.getUser());
+            }
+            result.render("users", users);
+        }
+
+        context.getSession().put("gameId", gameId + "");
+        AsyncController asyncController = new AsyncController();
+        asyncController.updateGamesList();
+
+        return result;
+    }
+
+    @FilterWith(SecureFilter.class)
+    public Result start(Context context) {
+        Result result = Results.html();
+
+        setPokerService(pokerService);
+        User u = new User();
+
+        Session session = context.getSession();
+        String username = session.get("login");
+        String gameIdString = session.get("gameId");
+        Long gameId = Long.parseLong(gameIdString);
+
+        List<User_Game> user_games = playGameService.playGame(gameId);
+        result.render("user_games", user_games);
+        //playGameService.hostGame(username);
+
+        return result;
+    }
+
+    @FilterWith(SecureFilter.class)
+    public Result view(Context context) {
+        Result result = Results.html();
+
+        List<Game> games = playGameService.viewGames();
+        Session session = context.getSession();
+        String username = session.get("login");
+
+        List<Game> otherPlayerGames = new ArrayList<Game>();
+        for(Game game:games){
+            for(User_Game user_games: game.user_games){
+                    if(!user_games.getUser().getUsername().equals(username)){
+                        otherPlayerGames.add(game);
+                    }
+            }
+        }
+
+        if(otherPlayerGames.isEmpty()){
+            result.render("gamesPlay", "No games available");
+            return result;
+        }
+        result.render("gamesPlay", "Games available:");
+        result.render("games", games);
+
+        return result;
+    }
+
+    @FilterWith(SecureFilter.class)
+    public Result join(@PathParam("id") Long id, Context context) {
+        Result result = Results.html();
+
+        setPokerService(pokerService);
+        User u = new User();
+
+        Session session = context.getSession();
+        String username = session.get("login");
+        context.getSession().put("gameId", id + "");
+
+        playGameService.joinGame(id,username);
+
+        AsyncController asyncController = new AsyncController();
+        asyncController.updateGameResult(id);
+
+        //playGameService.hostGame(username);
+
+        return result;
+    }
+
 }

@@ -1,9 +1,7 @@
 package services;
 
 import com.google.inject.Singleton;
-import models.Deck;
-import models.Hand;
-import models.User;
+import models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +52,9 @@ public class PokerService implements IPokerService {
 
         return result;
     }
+
+
+
 
     //join
     //retrieve game (game id), create new player game and set user and persist.

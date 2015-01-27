@@ -2,8 +2,9 @@
     <@layout.myLayout "Home page">
 
     <div style="opacity: 1">
-        <h1>Poker Hand Winner is: ${winner}</h1>
 
+
+        <h1>Poker Hand Winner is: ${winner}</h1>
 
                 <#list hands as hand>
                     <#list hand.cards as card>
@@ -13,34 +14,6 @@
                 </#list>
 
         <h2>You have a ${result0}</h2>
-        <img src="/assets/images/cards/${cOne0}" style="width:150px;height:228px">
-        <img src="/assets/images/cards/${cTwo0}" style="width:150px;height:228px">
-        <img src="/assets/images/cards/${cThree0}" style="width:150px;height:228px">
-        <img src="/assets/images/cards/${cFour0}" style="width:150px;height:228px">
-        <img src="/assets/images/cards/${cFive0}" style="width:150px;height:228px">
-
-        <h2>User ${user1} has a ${result1}</h2>
-        <img src="/assets/images/cards/${cOne1}" style="width:150px;height:228px">
-        <img src="/assets/images/cards/${cTwo1}" style="width:150px;height:228px">
-        <img src="/assets/images/cards/${cThree1}" style="width:150px;height:228px">
-        <img src="/assets/images/cards/${cFour1}" style="width:150px;height:228px">
-        <img src="/assets/images/cards/${cFive1}" style="width:150px;height:228px">
-
-
-        <h2>User ${user2} has a ${result2}</h2>
-        <img src="/assets/images/cards/${cOne2}" style="width:150px;height:228px">
-        <img src="/assets/images/cards/${cTwo2}" style="width:150px;height:228px">
-        <img src="/assets/images/cards/${cThree2}" style="width:150px;height:228px">
-        <img src="/assets/images/cards/${cFour2}" style="width:150px;height:228px">
-        <img src="/assets/images/cards/${cFive2}" style="width:150px;height:228px">
-
-
-        <h2>User ${user3} has a ${result3}</h2>
-        <img src="/assets/images/cards/${cOne3}" style="width:150px;height:228px">
-        <img src="/assets/images/cards/${cTwo3}" style="width:150px;height:228px">
-        <img src="/assets/images/cards/${cThree3}" style="width:150px;height:228px">
-        <img src="/assets/images/cards/${cFour3}" style="width:150px;height:228px">
-        <img src="/assets/images/cards/${cFive3}" style="width:150px;height:228px">
 
 
         <!-- <a href="/hello_world.json">Hello World Json</a> -->

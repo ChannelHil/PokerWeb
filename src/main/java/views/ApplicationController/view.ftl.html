@@ -1,0 +1,24 @@
+<#import "../layout/defaultLayout.ftl.html" as layout>
+
+    <@layout.myLayout "Play">
+
+    <h2>${gamesPlay}</h2>
+
+    <#if games??>
+        <div id="joinBtn">
+    <#list games as game>
+        ${game.id}
+        <#list game.user_games as user_game>
+        ${user_game.user.username}
+
+        <input type="button" id=${game.id} class="btn-group btn-group-lg" value="Join">
+
+        <br>
+        </#list>
+    </#list>
+        </div>
+        </#if>
+
+
+    </input>
+</@layout.myLayout>

@@ -11,13 +11,12 @@ import java.util.List;
 @Entity
 public class Game {
 
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "game")
-    public List<User_Game> user_games;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long id;
+
+    @OneToMany( mappedBy = "game" , fetch = FetchType.EAGER)
+    public List<User_Game> user_games;
 
     public Long getId() {
         return id;
@@ -26,6 +25,8 @@ public class Game {
     @Temporal(TemporalType.DATE)
     public Date gameDate;
 
+    @Enumerated(EnumType.STRING)
+    State state;
 
     public Game() {
     }
@@ -51,6 +52,22 @@ public class Game {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public List<User_Game> getUser_games() {
+        return user_games;
+    }
+
+    public void setUser_games(List<User_Game> user_games) {
+        this.user_games = user_games;
     }
 
     //ADD player game

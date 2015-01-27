@@ -13,7 +13,7 @@ public class Card implements Serializable{
     @EmbeddedId
     Rank_Suit rank_suit;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     List<Hand> hands;
 
 
@@ -62,6 +62,21 @@ public class Card implements Serializable{
         return rank_suit.getRank();
     }
 
+    public List<Hand> getHands() {
+        return hands;
+    }
+
+    public void setHands(List<Hand> hands) {
+        this.hands = hands;
+    }
+
+    public Rank_Suit getRank_suit() {
+        return rank_suit;
+    }
+
+    public void setRank_suit(Rank_Suit rank_suit) {
+        this.rank_suit = rank_suit;
+    }
 
     @Override
     public String toString() {

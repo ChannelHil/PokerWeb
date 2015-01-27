@@ -17,13 +17,10 @@
 package conf;
 
 
-import controllers.AuthenticationController;
-import controllers.HistoryController;
-import controllers.UserController;
+import controllers.*;
 import ninja.AssetsController;
 import ninja.Router;
 import ninja.application.ApplicationRoutes;
-import controllers.ApplicationController;
 
 public class Routes implements ApplicationRoutes {
 
@@ -39,6 +36,13 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/history").with(HistoryController.class, "history");
         router.GET().route("/logout").with(AuthenticationController.class, "logout");
         router.GET().route("/play").with(ApplicationController.class, "play");
+        router.GET().route("/host").with(ApplicationController.class, "host");
+        router.GET().route("/start").with(ApplicationController.class, "start");
+        router.GET().route("/view").with(ApplicationController.class, "view");
+        router.GET().route("/join/{id}").with(ApplicationController.class, "join");
+
+        //router.GET().route("/players").with(AsyncController.class, "view");
+        router.GET().route("/gameUpdate").with(AsyncController.class, "gameUpdate");
  
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)

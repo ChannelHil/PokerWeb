@@ -19,7 +19,7 @@ public class User {
     //@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     //public  List<Game_History> game_history;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     public  List<User_Game> user_games;
 
     public User() {
