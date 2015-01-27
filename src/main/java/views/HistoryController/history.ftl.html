@@ -7,7 +7,6 @@
             <tr>
                 <th>Game Number</th>
                 <th>User</th>
-                <th>Result</th>
                 <th>Win Round</th>
                 <th>Date</th>
             </tr>
@@ -20,10 +19,7 @@
                         ${game_test.user.username}
                     </td>
                     <td>
-                        ${game_test.result}
-                    </td>
-                    <td>
-                        ${game_test.winRound}
+                        ${game_test.winRound?c}
                     </td>
                     <td>
                         ${game_test.game.gameDate}
