@@ -26,6 +26,10 @@ CREATE TABLE user_game(
 
 CREATE TABLE hand(
     id BIGINT  AUTO_INCREMENT,
+    user_username VARCHAR(12),
+    user_game_id BIGINT,
+    FOREIGN KEY (user_username) REFERENCES user (username),
+    FOREIGN KEY (user_game_id) REFERENCES user_game(id),
     PRIMARY KEY (id)
 );
 
@@ -36,7 +40,7 @@ CREATE TABLE card(
 );
 
 CREATE TABLE hand_card(
-    hand_id BIGINT NOT NULL AUTO_INCREMENT,
+    hand_id BIGINT NOT NULL,
     card_rank INT NOT NULL,
     card_suit VARCHAR(10) NOT NULL,
     FOREIGN KEY (hand_id) REFERENCES hand (id),

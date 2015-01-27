@@ -2,40 +2,21 @@ $(document).ready(function()
  {
  $("#btnHost").click(function (){
 
-         $.ajax({
-                     		type: "POST",
-                            url: "/host"
-                         }).done(function(data) {
+        window.location.href = '/host';
+     });
+  $("#btnStart").click(function (){
 
-                     		$('#btnHost').val('Start Game');
+         window.location.href = '/start';
+  });
 
-                     		$("#btnHost").click(function (){
+   $("#btnView").click(function (){
 
-                                     $.ajax({
-                                               type: "POST",
-                                                url: "/start"
-                                                }).done(function(data) {
+          window.location.href = '/view';
+   });
 
-                                                 });
-                                 }
-                             );
-
-
-                     	});
-     }
- );
-
- $("#btnView").click(function (){
-
-         $.ajax({
-                     		type: "POST",
-                            url: "/view"
-                         }).done(function(data) {
-
-                     	});
-     }
- );
-
-
+      $("#joinBtn").delegate('*','click',function (e){
+            var id= e.target.id;
+            window.location.href = '/join/' + id;
+      });
 
  });

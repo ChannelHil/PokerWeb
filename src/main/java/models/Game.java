@@ -15,7 +15,7 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long id;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "game")
+    @OneToMany( mappedBy = "game" , fetch = FetchType.EAGER)
     public List<User_Game> user_games;
 
     public Long getId() {
@@ -62,7 +62,15 @@ public class Game {
         this.state = state;
     }
 
-//ADD player game
+    public List<User_Game> getUser_games() {
+        return user_games;
+    }
+
+    public void setUser_games(List<User_Game> user_games) {
+        this.user_games = user_games;
+    }
+
+    //ADD player game
     //set game to this check if games !=null
 
 }

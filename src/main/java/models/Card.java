@@ -13,7 +13,7 @@ public class Card implements Serializable{
     @EmbeddedId
     Rank_Suit rank_suit;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     List<Hand> hands;
 
 

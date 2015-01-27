@@ -2,13 +2,16 @@
 
     <@layout.myLayout "Play">
 
+    <#if games??>
     <#list user_games as user_game>
+
+
         <#list user_game.hand.cards as card>
             <img src="/assets/images/cards/${card.rank}_${card.suit}.png" style="width:150px;height:228px">
         </#list>
         <br><br><br><br><br>
     </#list>
-
+</#if>
 
     </input>
 </@layout.myLayout>

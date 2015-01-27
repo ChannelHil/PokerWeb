@@ -32,4 +32,8 @@ public class UserRepository extends BaseRepository<User>{
         return getEntityManager().createQuery("SELECT u FROM User u").getResultList();
     }
 
+    public List<User> getPlayersGame(Long id) {
+        //return getEntityManager().createQuery("SELECT u.username FROM User u LIMIT " + numberPlayers).getResultList();
+        return getEntityManager().createQuery("SELECT u FROM User u WHERE u.user_games.game_id=:id").setParameter("id", id).getResultList();
+    }
 }

@@ -25,6 +25,7 @@ import ninja.Result;
 import ninja.Results;
 
 import com.google.inject.Singleton;
+import ninja.params.PathParam;
 import ninja.session.Session;
 import services.AuthenticationService;
 import services.IPokerService;
@@ -189,10 +190,24 @@ public class ApplicationController {
         User loggedInUser= playGameService.findUser(username);
 
         Long gameId = playGameService.hostGame(loggedInUser);
+        Game game = playGameService.getPlayersGame(gameId);
+
+        //List<User_Game> user_games = game.getUser_games();
+        List<User_Game> user_games = playGameService.getGamePlayers(gameId);
+
+        if(user_games!=null) {
+            List<User> users = new ArrayList<User>();
+            for (User_Game user_game : user_games) {
+
+                users.add(user_game.getUser());
+            }
+            result.render("users", users);
+        }
 
         context.getSession().put("gameId", gameId + "");
+        AsyncController asyncController = new AsyncController();
+        asyncController.updateGamesList();
 
-        result.render("test", "TESTING");
         return result;
     }
 
@@ -220,12 +235,45 @@ public class ApplicationController {
         Result result = Results.html();
 
         List<Game> games = playGameService.viewGames();
-        if(games.isEmpty()){
+        Session session = context.getSession();
+        String username = session.get("login");
+
+        List<Game> otherPlayerGames = new ArrayList<Game>();
+        for(Game game:games){
+            for(User_Game user_games: game.user_games){
+                    if(!user_games.getUser().getUsername().equals(username)){
+                        otherPlayerGames.add(game);
+                    }
+            }
+        }
+
+        if(otherPlayerGames.isEmpty()){
             result.render("gamesPlay", "No games available");
             return result;
         }
         result.render("gamesPlay", "Games available:");
         result.render("games", games);
+
+        return result;
+    }
+
+    @FilterWith(SecureFilter.class)
+    public Result join(@PathParam("id") Long id, Context context) {
+        Result result = Results.html();
+
+        setPokerService(pokerService);
+        User u = new User();
+
+        Session session = context.getSession();
+        String username = session.get("login");
+        context.getSession().put("gameId", id + "");
+
+        playGameService.joinGame(id,username);
+
+        AsyncController asyncController = new AsyncController();
+        asyncController.updateGameResult(id);
+
+        //playGameService.hostGame(username);
 
         return result;
     }

@@ -3,6 +3,7 @@ package services;
 import com.google.inject.Inject;
 import models.*;
 import repository.GameRepository;
+import repository.HandRepository;
 import repository.UserGameRepository;
 import repository.UserRepository;
 
@@ -26,6 +27,9 @@ public class PlayGameService {
     UserRepository userRepository;
 
     @Inject
+    HandRepository handRepository;
+
+    @Inject
     private IPokerService pokerService;
 
     models.Result resultEnum;
@@ -42,6 +46,10 @@ public class PlayGameService {
 
     public List<User> getPlayers(){
         return userRepository.getPlayers();
+    }
+
+    public Game getPlayersGame(Long id){
+        return gameRepository.getGameFromId(id).get();
     }
 
     public User findUser(String username){
@@ -79,12 +87,18 @@ public class PlayGameService {
         user_game.setGame(game.get());
         user_game.setUser(findUser(username));
         userGameRepository.persist(user_game);
+        
     }
 
     //get amount of players
     public int countPlayers(Long gameId){
         List<User_Game> user_games = userGameRepository.retrieveGamePlayers(gameId);
         return user_games.size();
+    }
+
+    public List<User_Game> getGamePlayers(Long gameId){
+        List<User_Game> user_games = userGameRepository.retrieveGamePlayers(gameId);
+        return user_games;
     }
 
     //play game
@@ -97,7 +111,13 @@ public class PlayGameService {
         int highestStrength= 0;
 
         for(int i=0; i<user_games.size(); i++){
-            user_games.get(i).setHand(hands.get(i));
+
+            //TODO inserting in wrong values
+            Hand hand = hands.get(i);
+            hand.setUser(user_games.get(i).getUser());
+            hand.setUser_game(user_games.get(i));
+            user_games.get(i).setHand(hand);
+
             int strength = pokerService.evaluateHand(hands.get(i));
             if(strength>highestStrength){
                 winnerIndex = i;
@@ -108,6 +128,7 @@ public class PlayGameService {
             userGameRepository.merge(user_games.get(i));
         }
         user_games.get(winnerIndex).setWinRound(true);
+        g.get().setState(State.FINISHED);
         userGameRepository.merge(user_games.get(winnerIndex));
 
         return user_games;

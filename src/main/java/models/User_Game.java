@@ -12,13 +12,13 @@ public class User_Game extends BaseEntity{
     @ManyToOne (cascade = CascadeType.ALL)
     Game game;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     User user;
 
     @Enumerated(EnumType.STRING)
     Result result;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     Hand hand;
 
     boolean winRound;

@@ -18,16 +18,16 @@ public class GameRepository extends BaseRepository<Game>{
 
     //todo
     public List<Game> retrieveHistory(String username){
-        List<Game> gh = (getEntityManager().createQuery("SELECT gh FROM GAME gh WHERE gh.user.username=:username").setParameter("username", username)).getResultList();
+        List<Game> gh = (getEntityManager().createQuery("SELECT gh FROM Game gh WHERE gh.user.username=:username").setParameter("username", username)).getResultList();
         return gh;
     }
 
     public Optional<Game> getGameFromId(Long id){
-       Optional<Game> game = getSingleResult(getEntityManager().createQuery("SELECT g FROM Game g WHERE g.id = :id").setParameter("id", id));
+        Optional<Game> game = getSingleResult(getEntityManager().createQuery("SELECT g FROM Game g WHERE g.id = :id").setParameter("id", id));
         return game;
     }
     public List<Game> retrieveGames(){
-        List<Game> gh = (getEntityManager().createQuery("SELECT gh FROM GAME gh WHERE gh.game.state='PENDING'")).getResultList();
+        List<Game> gh = (getEntityManager().createQuery("SELECT gh FROM Game gh WHERE gh.state='PENDING'")).getResultList();
         return gh;
     }
 

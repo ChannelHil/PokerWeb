@@ -15,9 +15,10 @@ public class UserGameRepository extends BaseRepository<User_Game>{
     User_Game user_game;
 
     public List<User_Game> retrieveGamePlayers(Long id){
-        List<User_Game> game = (getEntityManager().createQuery("SELECT ug FROM User_Game ug WHERE ug.game.id = :id AND ").setParameter("id", id)).getResultList();
+        List<User_Game> game = (getEntityManager().createQuery("SELECT ug FROM User_Game ug WHERE ug.game.id = :id AND ug.game.state='PENDING'").setParameter("id", id)).getResultList();
         return game;
     }
+
 
     public List<User_Game> retrieveHistory(String username){
         List<User_Game> gh = (getEntityManager().createQuery("SELECT gh FROM User_Game gh WHERE gh.user.username=:username").setParameter("username", username)).getResultList();
