@@ -1,7 +1,8 @@
+
 <div id="players" class="list-group">
-    <#if user_games??>
-    <#list user_games as user_game>
-        <li id="list"> ${user_game.user.username}</li>
+    <#if users??>
+    <#list users as user>
+        <li> ${user.username}</li>
     </#list>
     </#if>
 </div>

@@ -3,6 +3,8 @@ package controllers;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import models.Game;
+import models.User;
+import models.User_Game;
 import ninja.Context;
 import ninja.Result;
 import ninja.Results;
@@ -10,6 +12,8 @@ import services.PlayGameService;
 
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -29,7 +33,7 @@ public class AsyncController {
         updateMap.put(id, instant);
     }
 
-    public void updateGamesList() {
+    public synchronized void updateGamesList() {
         updateGames = Instant.now();
     }
 
@@ -42,9 +46,19 @@ public class AsyncController {
             Thread.sleep(100);
         }
         Game game = playGameService.getPlayersGame(gameId);
-        if(game!=null){
-            return Results.json().render(game);
+
+        List<User_Game> user_games = playGameService.getGamePlayers(gameId);
+
+        if(user_games!=null) {
+            List<User> users = new ArrayList<User>();
+            for (User_Game user_game : user_games) {
+
+                users.add(user_game.getUser());
+            }
+            //result.render("users", users);
+            return Results.json().render(users);
         }
+
         return Results.notFound();
     }
 }

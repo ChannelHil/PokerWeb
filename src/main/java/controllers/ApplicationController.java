@@ -49,6 +49,9 @@ public class ApplicationController {
     @Inject
     AuthenticationService authenticationService;
 
+    @Inject
+            AsyncController asyncController;
+
     models.Result resultEnum;
 
 
@@ -205,7 +208,6 @@ public class ApplicationController {
         }
 
         context.getSession().put("gameId", gameId + "");
-        AsyncController asyncController = new AsyncController();
         asyncController.updateGamesList();
 
         return result;
@@ -240,8 +242,10 @@ public class ApplicationController {
 
         List<Game> otherPlayerGames = new ArrayList<Game>();
         for(Game game:games){
-            for(User_Game user_games: game.user_games){
-                    if(!user_games.getUser().getUsername().equals(username)){
+
+            List<User_Game> user_games = playGameService.getGamePlayers(game.getId());
+            for(User_Game user_game: user_games){
+                    if(!user_game.getUser().getUsername().equals(username)){
                         otherPlayerGames.add(game);
                     }
             }
@@ -270,7 +274,6 @@ public class ApplicationController {
 
         playGameService.joinGame(id,username);
 
-        AsyncController asyncController = new AsyncController();
         asyncController.updateGameResult(id);
 
         //playGameService.hostGame(username);

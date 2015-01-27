@@ -1,10 +1,10 @@
 $(document).ready(function()
 {
-    function viewPlayers(game){
+    function viewPlayers(users){
         $( "#players" ).html("");
-        $.each(game.user_games, function(k,user_game)
+        $.each(users, function(k,user)
         {
-            $( "#players" ).append('<li id="list">' + user_game.user.username+ '</li>');
+            $( "#players" ).append('<li>' + user.username + '</li>');
         });
     };
 
@@ -13,13 +13,9 @@ $(document).ready(function()
                 {
                     type: "GET",
                     url: "/gameUpdate"
-                }).done(function(game)
+                }).done(function(users)
                 {
-                    if (game.status === "FINISHED")
-                    {
-
-                    }
-                    viewPlayers(game);
+                    viewPlayers(users);
                     updateGame();
                 });
             };
